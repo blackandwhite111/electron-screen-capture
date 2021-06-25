@@ -1,18 +1,28 @@
-
 <template>
-  <div class="app-wrap">
-    <div class="main-wrap">{{title}}</div>
-  </div>
+    <div class="app-wrap">
+        <router-view></router-view>
+    </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      title: "首页",
-    };
-  },
-};
+  import {ipcRenderer} from 'electron';
+
+  export default {
+    data() {
+      return {
+        title: "首页",
+      };
+    },
+    methods: {
+      add: function (e) {
+        console.log(this.$route)
+        ipcRenderer.send('capture', {aa: 1})
+      }
+    },
+    created() {
+      // ipcRenderer.send('capture', {bb: 22})
+    }
+  };
 </script>
 <style lang="scss">
-@import "./App.scss";
+    @import "./App.scss";
 </style>
