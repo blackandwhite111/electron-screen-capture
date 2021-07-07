@@ -8,7 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(VueRouter)
 Vue.use(ElementUI)
-
+Vue.prototype.isDev = process.env.NODE_ENV === 'development';
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios;
 new Vue({

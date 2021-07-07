@@ -47,10 +47,10 @@
     },
     methods: {
       getBaiduToken: function () {
-        // let url = "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=OqIp4UKeXhGxGj8Lzky7qjCb&client_secret=bcBhEY0UOSyAbraU5RmUOBQG1yj0PIoN"
-        let url = "/api/accessToken?grant_type=client_credentials&client_id=OqIp4UKeXhGxGj8Lzky7qjCb&client_secret=bcBhEY0UOSyAbraU5RmUOBQG1yj0PIoN"
+        let url1 = "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=OqIp4UKeXhGxGj8Lzky7qjCb&client_secret=bcBhEY0UOSyAbraU5RmUOBQG1yj0PIoN"
+        let url2 = "/api/accessToken?grant_type=client_credentials&client_id=OqIp4UKeXhGxGj8Lzky7qjCb&client_secret=bcBhEY0UOSyAbraU5RmUOBQG1yj0PIoN"
         return this.$http({
-          url: url,
+          url: this.isDev?url2:url1,
           method: 'post',
           data: {},
           // headers: {
@@ -59,8 +59,9 @@
         })
       },
       toBaiduOrc: function (token) {
-        let url = "/api/orc";
-        url += `?access_token=${token}`;
+        let url1 = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic";
+        let url2 = "/api/orc";
+        let url = (this.isDev?url2:url1) + `?access_token=${token}`;
         let form = new FormData();
         form.append('image', this.src)
         form.append('language_type', "auto_detect")

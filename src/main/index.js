@@ -98,7 +98,7 @@ const captureScreen = (e, args) => {
     let url = path.resolve(__dirname, "../../static/qq/PrintScr.exe");
     if (!isDev) {
       // 生产环境
-      url = path.join(__dirname, "../../../../extraResources/PrintScr.exe" );
+      url = path.join(__dirname, "./static/qq/PrintScr.exe" );
     }
     let screen_window = child_process.execFile(url);
     screen_window.on("exit", (code) => {
@@ -113,7 +113,9 @@ const captureScreen = (e, args) => {
 const clipboardParsing = function() {
     let pngs = clipboard.readImage().toPNG();   //可改变图片格式，如：toJPEG
     let imgData = Buffer.from(pngs, "beas64");
-    mainWindow.webContents.send('captureResult', arrayBufferToBase64(imgData));
+    if(arrayBufferToBase64(imgData)) {
+        mainWindow.webContents.send('captureResult', 'data:image/png;base64,'+ arrayBufferToBase64(imgData));
+    }
     // ipcRenderer.send('captureResult')
 
 }
@@ -151,5 +153,5 @@ function arrayBufferToBase64(array) {
             + table[(lastNum2 & 0b1111) << 2]
             + '=';
     }
-    return 'data:image/png;base64,'+base64Str;
+    return base64Str;
 }

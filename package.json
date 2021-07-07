@@ -28,7 +28,7 @@
     "vue-router": "^3.5.2"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^6.0.3",
+    "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^3.6.0",
     "del": "^5.1.0",
     "electron": "^13.1.4",

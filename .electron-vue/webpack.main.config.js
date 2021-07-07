@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const CopyPlugin = require("copy-webpack-plugin");
 
 let mainConfig = {
   entry: {
@@ -19,7 +20,12 @@ let mainConfig = {
   },
   plugins: [
     // 在编译出现错误时，使用 NoEmitOnErrorsPlugin 来跳过输出阶段
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: "static", to: "static" },
+      ],
+    }),
   ],
   resolve: {
     // 自动解析，引入文件不需要加以下后缀
