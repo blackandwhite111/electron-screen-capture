@@ -46,6 +46,18 @@ var runner = {
       // 创建服务
       var server = new WebpackDevServer(compiler, {
         // 指定一个虚拟路径来让devServer服务器提供内容
+        proxy: {
+          '/api/accessToken': {
+            target: 'https://aip.baidubce.com/oauth/2.0/token',
+            pathRewrite: {'^/api/accessToken' : ''},
+            changeOrigin: true,
+          },
+          '/api/orc': {
+            target: 'https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic',
+            pathRewrite: {'^/api/orc' : ''},
+            changeOrigin: true,
+          }
+        },
         contentBase: path.join(__dirname, "../"),
         // 在浏览器中打开
         // open: true,

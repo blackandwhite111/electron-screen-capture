@@ -6,19 +6,20 @@
       </el-row>
       <div>
         <el-row :gutter="20">
-          <el-col :span="14"><div class="">
+          <el-col :span="10"><div class="">
             <div class="grid-content-title">当前截图图片</div>
           </div></el-col>
-          <el-col :span="10"><div class="">
+          <el-col :span="14"><div class="">
             <div class="grid-content-title">当前截图识别文字</div>
           </div></el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="14"><div class="grid-content bg-purple">
+          <el-col :span="10"><div class="grid-content bg-purple">
             <el-image :src="src"></el-image>
           </div></el-col>
-          <el-col :span="10"><div class="captureToWord-parent grid-content bg-purple">
-            <div v-html="text" v-loading="loading" class="captureToWord">
+          <el-col :span="14"><div class="captureToWord-parent grid-content bg-purple">
+            <div v-loading="loading" class="captureToWord">
+              <textarea v-html="text" style="width: 100%; height: 100%; font-size: 14px;"></textarea>
             </div>
           </div></el-col>
         </el-row>
@@ -81,13 +82,14 @@
           this.loading = false;
         }catch (e) {
           this.loading = false;
+          this.$message.error('调用接口失败，'+ e);
         }
 
       },
       setWords: function (arr) {
         let str = "";
         for (let i=0;i<arr.length; i++) {
-          str = str + arr[i].words + '<br>'
+          str = str + arr[i].words + '\n' + '\n'
         }
         this.text = str;
       },

@@ -35,7 +35,7 @@ app.on('ready', () => {
     // })
 
   ipcMain.on('capture', (event, param) => {
-    console.log(param); //接收到的参数：我是消息内容
+    // console.log(param); //接收到的参数：我是消息内容
     captureScreen()
   })
 });
@@ -87,13 +87,27 @@ let captureWin = null;
 // }
 
 const captureScreen = (e, args) => {
+  if (process.platform == "darwin") {  //判断当前操作系统，"darwin" 是mac系统     "win32" 是window系统
     child_process.exec(`screencapture -i -c`,  (error, stdout, stderr) => {
-        console.log("308", error);
-        if (!error) {
-            clipboardParsing()
-            //截图完成，在粘贴板中
-        }
+      if (!error) {
+        clipboardParsing()
+        //截图完成，在粘贴板中
+      }
     });
+  } else {
+    let url = path.resolve(__dirname, "../../static/qq/PrintScr.exe");
+    if (!isDev) {
+      // 生产环境
+      url = path.join(__dirname, "../../../../extraResources/PrintScr.exe" );
+    }
+    let screen_window = child_process.execFile(url);
+    screen_window.on("exit", (code) => {
+      if (code) {
+        clipboardParsing();
+      }
+    });
+  }
+
 }
 
 const clipboardParsing = function() {
