@@ -1,6 +1,6 @@
 'use strict'
 
-const { app, BrowserWindow, ipcMain, globalShortcut, clipboard } = require('electron');
+const { app, BrowserWindow, ipcMain, globalShortcut, clipboard, Menu } = require('electron');
 const path = require('path');
 const child_process = require("child_process");
 
@@ -23,6 +23,9 @@ app.on('ready', () => {
             devTools: isDev
         }
     });
+    if(!isDev) {
+      Menu.setApplicationMenu(null)
+    }
     mainWindow.webContents.openDevTools();
     mainWindow.loadURL(winURL);
 
@@ -98,7 +101,8 @@ const captureScreen = (e, args) => {
     let url = path.resolve(__dirname, "../../static/qq/PrintScr.exe");
     if (!isDev) {
       // 生产环境
-      url = path.join(__dirname, "../../../../extraResources/PrintScr.exe" );
+      url = path.join(__dirname, "../../../extraResources/PrintScr.exe" );
+      // url = `file://${__dirname}/static/qq/PrintScr.exe`;
     }
     let screen_window = child_process.execFile(url);
     screen_window.on("exit", (code) => {

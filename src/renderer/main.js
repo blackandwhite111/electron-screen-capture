@@ -11,6 +11,7 @@ Vue.use(ElementUI)
 
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios;
+Vue.prototype.isDev = process.env.NODE_ENV === 'development';
 new Vue({
   router,
   render: h => h(App)

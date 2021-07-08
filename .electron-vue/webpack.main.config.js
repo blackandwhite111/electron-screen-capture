@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 let mainConfig = {
   entry: {
@@ -18,6 +19,11 @@ let mainConfig = {
     path: path.join(__dirname, '../dist/electron')
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: 'static', to: 'static' },
+      ],
+    }),
     // 在编译出现错误时，使用 NoEmitOnErrorsPlugin 来跳过输出阶段
     new webpack.NoEmitOnErrorsPlugin()
   ],

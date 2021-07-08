@@ -19,7 +19,11 @@
           </div></el-col>
           <el-col :span="14"><div class="captureToWord-parent grid-content bg-purple">
             <div v-loading="loading" class="captureToWord">
-              <textarea v-html="text" style="width: 100%; height: 100%; font-size: 14px;"></textarea>
+              <el-input
+                      type="textarea"
+                      placeholder="试试截屏带文字的图片"
+                      :value="text">
+              </el-input>
             </div>
           </div></el-col>
         </el-row>
@@ -47,10 +51,10 @@
     },
     methods: {
       getBaiduToken: function () {
-        // let url = "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=OqIp4UKeXhGxGj8Lzky7qjCb&client_secret=bcBhEY0UOSyAbraU5RmUOBQG1yj0PIoN"
-        let url = "/api/accessToken?grant_type=client_credentials&client_id=OqIp4UKeXhGxGj8Lzky7qjCb&client_secret=bcBhEY0UOSyAbraU5RmUOBQG1yj0PIoN"
+        let url1 = "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=OqIp4UKeXhGxGj8Lzky7qjCb&client_secret=bcBhEY0UOSyAbraU5RmUOBQG1yj0PIoN"
+        let url2 = "/api/accessToken?grant_type=client_credentials&client_id=OqIp4UKeXhGxGj8Lzky7qjCb&client_secret=bcBhEY0UOSyAbraU5RmUOBQG1yj0PIoN"
         return this.$http({
-          url: url,
+          url: this.isDev?url2:url1,
           method: 'post',
           data: {},
           // headers: {
@@ -59,13 +63,13 @@
         })
       },
       toBaiduOrc: function (token) {
-        let url = "/api/orc";
-        url += `?access_token=${token}`;
+        let url1 = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic"
+        let url2 = "/api/orc";
         let form = new FormData();
         form.append('image', this.src)
         form.append('language_type', "auto_detect")
         return this.$http({
-          url: url,
+          url: (this.isDev?url2:url1) + `?access_token=${token}`,
           method: 'post',
           data: form,
           headers: {
@@ -151,6 +155,13 @@
   padding: 5px;
   font-size: 14px;
   background: #ffffff;
+}
+.captureToWord .el-textarea {
+  height: 100%;
+}
+.captureToWord .el-textarea >>> .el-textarea__inner {
+  height: 100%;
+  resize: none;
 }
 .row-bg {
   padding: 10px 0;
