@@ -85,12 +85,21 @@ let captureWin = null;
 //       captureWin = null
 //   })
 // }
+function hide() {
+    mainWindow.hide()
+}
+
+function show() {
+    mainWindow.show()
+}
 
 const captureScreen = (e, args) => {
+    hide()
   if (process.platform == "darwin") {  //判断当前操作系统，"darwin" 是mac系统     "win32" 是window系统
     child_process.exec(`screencapture -i -c`,  (error, stdout, stderr) => {
       if (!error) {
-        clipboardParsing()
+        clipboardParsing();
+          show();
         //截图完成，在粘贴板中
       }
     });
@@ -104,6 +113,7 @@ const captureScreen = (e, args) => {
     screen_window.on("exit", (code) => {
       if (code) {
         clipboardParsing();
+        show();
       }
     });
   }

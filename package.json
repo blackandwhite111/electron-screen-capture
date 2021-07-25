@@ -14,6 +14,16 @@
     "files": [
       "dist/electron/**/*"
     ],
+    "extraResources": [
+      {
+        "from": "./static/qq/PrintScr.exe",
+        "to": "./extraResources/PrintScr.exe"
+      },
+      {
+        "from": "./static/qq/PrScrn.dll",
+        "to": "./extraResources/PrScrn.dll"
+      }
+    ],
     "directories": {
       "output": "build"
     },
